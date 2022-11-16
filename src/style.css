@@ -31,6 +31,8 @@ li {
   padding: 0;
   text-align: left;
   font-weight: normal;
+}
+li::first-letter {
   text-transform: capitalize;
 }
 .overview {
