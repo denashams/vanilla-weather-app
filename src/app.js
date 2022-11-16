@@ -26,7 +26,6 @@ function displayTemperature(response) {
   temperatureElement.innerHTML = Math.round(response.data.main.temp);
   let cityElement = document.querySelector("#city");
   cityElement.innerHTML = response.data.name;
-  console.log(response.data);
   let descriptionElement = document.querySelector("#description");
   descriptionElement.innerHTML = response.data.weather[0].description;
   let humidityElement = document.querySelector("#humidity");
@@ -35,7 +34,13 @@ function displayTemperature(response) {
   windElement.innerHTML = Math.round(response.data.wind.speed);
   let dateElement = document.querySelector("#date");
   dateElement.innerHTML = formatDate(response.data.dt * 1000);
+  let iconElement = document.querySelector("#icon");
+  iconElement.setAttribute(
+    "src",
+    `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
 }
+let city = "Bushehr";
 let apiKey = "f62ff249a72da3b34cec98a655e25650";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${apiKey}&units=metric`;
+let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 axios.get(apiUrl).then(displayTemperature);
