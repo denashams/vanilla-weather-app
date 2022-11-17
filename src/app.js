@@ -20,28 +20,56 @@ function formatDate(timestamp) {
   let day = days[date.getDay()];
   return `${day} ${hours}: ${minutes}`;
 }
+function formatForecastDate(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  return days[day];
+}
 
-function displayForecast() {
+function displayForecast(response) {
+  let forecast = response.data.daily;
+
   let forecastelement = document.querySelector("#weather-forecast");
   let forecastHtml = `<dive class="row">`;
-  let days = ["Thurseday", "Friday", "Saturday"];
-  days.forEach(function (day) {
-    forecastHtml =
-      forecastHtml +
-      ` 
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHtml =
+        forecastHtml +
+        ` 
                   <div class="col-2">
-                    <div class="forecast-date">${day}</div>
+                    <div class="forecast-date">${formatForecastDate(
+                      forecastDay.dt
+                    )}
+                    
+                    </div>
                     <img
-                      src="https://openweathermap.org/img/wn/50d@2x.png"
+                      src="https://openweathermap.org/img/wn/${
+                        forecastDay.weather[0].icon
+                      }@2x.png"
                       alt=""
                       width="60"
                     />
                     <div class="forecast-temperature">
-                      <span class="max-temp"> 18° </span>
-                      <span class="min-temp"> 12° </span>
+                      <span class="max-temp"> ${Math.round(
+                        forecastDay.temp.max
+                      )}° </span>
+                      <span class="min-temp"> ${Math.round(
+                        forecastDay.temp.min
+                      )}° </span>
                     </div>
                   </div>
                 `;
+    }
   });
 
   forecastHtml = forecastHtml + `</div>`;
@@ -111,10 +139,6 @@ function displayCelsiusTemperature(event) {
   fahrenheitLink.classList.remove("active");
   let temperatureElement = document.querySelector("#temperature");
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
-}
-
-function displayForecast(response) {
-  console.log(response.data.daily);
 }
 
 let celsiusTemperature = null;
