@@ -73,12 +73,15 @@ li:first-letter {
   border-bottom: 1px solid #f2f9f1;
 }
 .weather-forecast {
+  background-color: #9ebca1;
+  border-radius: 10px;
   margin-top: 20px;
   text-align: center;
+  padding: 10px;
 }
 .forecast-date {
   font-size: 16px;
-  color: #b6cdbd;
+  color: black;
 }
 .forecast-temperature {
   font-size: 16px;
